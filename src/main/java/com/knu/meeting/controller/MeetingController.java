@@ -27,3 +27,18 @@ public class MeetingController {
 
     // Other meeting-related endpoints
 }
+
+/*
+[
+{
+x: 23123
+y: 2131
+title: 그룹 1
+info: 안녕하세요
+road_address_name: 대구광역시 북구 대학로 80
+link: 채팅
+}
+]
+
+
+ */

@@ -3,9 +3,9 @@ package com.knu.meeting.repository.impl;
 import com.knu.meeting.model.entity.User;
 import com.knu.meeting.repository.UserRepository;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 
 @Transactional
@@ -20,10 +20,12 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findByUsername(String username) {
-        return entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+    public Optional<User> findByUsername(String username) {
+        List<User> resultList = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
                 .setParameter("username", username)
-                .getSingleResult();
+                .getResultList();
+
+        return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList.get(0));
     }
 
     @Override
@@ -31,6 +33,7 @@ public class UserRepositoryImpl implements UserRepository {
         if (user.getId() == null) {
             entityManager.persist(user);
         } else {
+            // 병합을 통한 변경
             entityManager.merge(user);
         }
     }
@@ -46,6 +49,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
+        return entityManager.createQuery("SELECT u FROM User u JOIN FETCH u.participations", User.class).getResultList();
     }
 }

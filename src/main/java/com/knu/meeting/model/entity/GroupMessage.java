@@ -1,5 +1,6 @@
 package com.knu.meeting.model.entity;
 
+
 import com.knu.meeting.model.vo.TimeStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -10,30 +11,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.Getter;
 
-
-// user와 meeting을 연결해주는 역할
 @Entity
 @Getter
-@Table(name = "participations")
-public class Participation {
+@Table(name = "massages")
+public class GroupMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Embedded
+    private TimeStatus timeStatus;
+
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "creator_id")
+    private User creator;
 
     @ManyToOne
     @JoinColumn(name = "meeting_id")
     private Meeting meeting;
 
-    @Embedded
-    @Column(name = "time_status")
-    private TimeStatus timeStatus;
-
+    private String contents;
 }
-

@@ -20,14 +20,14 @@ public class ParticipationController {
 
     @GetMapping("/user/{userId}")
     public List<Participation> getParticipationsByUser(@PathVariable Long userId) {
-        // Assume userService.getUserById is implemented to get user by ID
+
         User user = userService.findById(userId);
         return participationService.findByUser(user);
     }
 
     @GetMapping("/user/{userId}/past")
     public List<Participation> getPastParticipationsByUser(@PathVariable Long userId) {
-        // Assume userService.getUserById is implemented to get user by ID
+
         User user = userService.findById(userId);
         return participationService.findByUser(user);
     }

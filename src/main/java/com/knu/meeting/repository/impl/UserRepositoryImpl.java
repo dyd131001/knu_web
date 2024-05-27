@@ -15,17 +15,18 @@ public class UserRepositoryImpl implements UserRepository {
     private EntityManager entityManager;
 
     @Override
-    public User findById(Long id) {
-        return entityManager.find(User.class, id);
+    public Optional<User> findById(Long id) {
+        User user = entityManager.find(User.class, id);
+        return Optional.ofNullable(user);
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        List<User> resultList = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+        List<User> result = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
                 .setParameter("username", username)
                 .getResultList();
 
-        return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList.get(0));
+        return result.stream().findAny();
     }
 
     @Override

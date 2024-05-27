@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import lombok.Builder;
 import lombok.Getter;
 
 @Entity
@@ -36,4 +37,15 @@ public class GroupMessage {
     private Meeting meeting;
 
     private String contents;
+
+    @Builder
+    public GroupMessage( User creator, Meeting meeting, String contents) {
+        this.creator = creator;
+        this.timeStatus = new TimeStatus();
+        this.meeting = meeting;
+        this.contents = contents;
+        meeting.getMessages().add(this);
+    }
+
+
 }

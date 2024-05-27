@@ -3,10 +3,18 @@ package com.knu.meeting.mapper;
 import com.knu.meeting.model.constant.Gender;
 import com.knu.meeting.model.constant.Hobby;
 import com.knu.meeting.model.constant.Role;
+import com.knu.meeting.model.dto.CreateUserDTO;
+import com.knu.meeting.model.dto.DetailUserDTO;
+import com.knu.meeting.model.dto.GroupMessageDTO;
+import com.knu.meeting.model.dto.MeetingDTO;
 import com.knu.meeting.model.dto.UserDTO;
+import com.knu.meeting.model.entity.GroupMessage;
+import com.knu.meeting.model.entity.Meeting;
+import com.knu.meeting.model.entity.Participation;
 import com.knu.meeting.model.entity.User;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.hibernate.Hibernate;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -15,6 +23,9 @@ import org.mapstruct.factory.Mappers;
 
 
 // mapstruct가 구현체를 만들어줌
+// user -> DetailUserDTO 변환
+// user -> UserDTO 변환
+// user <- CreateUserDTO 변환
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
@@ -22,14 +33,37 @@ public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
 
-    @Mapping(source = "userDTO.gender", target = "gender", qualifiedByName = "toGenderEnum")
-    @Mapping(source = "userDTO.hobbies", target = "hobbies", qualifiedByName = "toHobbiesEnum")
-    //@Mapping(source = "userDTO.timeStatus", target="timeStatus", ignore=true)
-    User userDTOToEntity(Role role, UserDTO userDTO);
+    @Mapping(source = "createUserDTO.gender", target = "gender", qualifiedByName = "toGenderEnum")
+    @Mapping(source = "createUserDTO.hobbies", target = "hobbies", qualifiedByName = "toHobbiesEnum")
+    // 없는 필드는 기본적으로 무시됨
+    //@Mapping(source = "createUserDTO.timeStatus", target="timeStatus", ignore=true)
+    User createUserDTOToEntity(Role role, CreateUserDTO createUserDTO);
 
     @Mapping(source = "user.gender", target = "gender", qualifiedByName = "toGenderString")
     @Mapping(source = "user.hobbies", target = "hobbies", qualifiedByName = "toHobbiesString")
-    UserDTO userEntityToDTO(User user);
+    @Mapping(source = "user.participations", target = "meetings", qualifiedByName = "toMeetingDTO")
+    DetailUserDTO toDetailUserDTO(User user);
+
+    @Mapping(source = "user.gender", target = "gender", qualifiedByName = "toGenderString")
+    @Mapping(source = "user.hobbies", target = "hobbies", qualifiedByName = "toHobbiesString")
+    UserDTO toUserDTO(User user);
+
+    @Named("toMeetingDTO")
+    static List<MeetingDTO> toMeetingDTO(List<Participation> participations){
+        List<Meeting> meetings =  participations.stream()
+                .map(participation -> {
+                    // Hibernate.initialize(participation.getMeeting());
+                    return  participation.getMeeting();
+                })
+                .collect(Collectors.toList());
+
+        return meetings.stream()
+                .map(meeting -> {
+                    // Hibernate.initialize(meeting.getLocation());
+                    return MeetingMapper.INSTANCE.toMeetingDTO(meeting);
+                })
+                .collect(Collectors.toList());
+    }
 
     @Named("toGenderEnum")
     static Gender toGender(String gender) {
@@ -69,7 +103,7 @@ public interface UserMapper {
 
 /* 사용 예시
     // Entity -> DTO
-    UserDTO resultDTO = UserMapper.INSTANCE.userEntityToDTO(userEntity);
+    DetailUserDTO resultDTO = UserMapper.INSTANCE.userEntityToDTO(userEntity);
     // DTO -> Entity, Setter가 없어도 @Builder가 붙어있다면 변환 가능
     UserEntity resultEntity = UserMapper.INSTANCE.userDTOToEntity(resultDTO);
  */

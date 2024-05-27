@@ -1,6 +1,8 @@
 package com.knu.meeting.mapper;
 
 import com.knu.meeting.model.constant.Role;
+import com.knu.meeting.model.dto.CreateUserDTO;
+import com.knu.meeting.model.dto.DetailUserDTO;
 import com.knu.meeting.model.dto.UserDTO;
 import com.knu.meeting.model.entity.User;
 import javax.annotation.processing.Generated;
@@ -8,28 +10,28 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-22T21:50:08+0900",
+    date = "2024-05-28T03:57:21+0900",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.10 (Oracle Corporation)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
 
     @Override
-    public User userDTOToEntity(Role role, UserDTO userDTO) {
-        if ( role == null && userDTO == null ) {
+    public User createUserDTOToEntity(Role role, CreateUserDTO createUserDTO) {
+        if ( role == null && createUserDTO == null ) {
             return null;
         }
 
         User.UserBuilder user = User.builder();
 
-        if ( userDTO != null ) {
-            user.gender( UserMapper.toGender( userDTO.getGender() ) );
-            user.hobbies( UserMapper.toHobbies( userDTO.getHobbies() ) );
-            user.username( userDTO.getUsername() );
-            user.password( userDTO.getPassword() );
-            user.email( userDTO.getEmail() );
-            user.address( userDTO.getAddress() );
-            user.age( userDTO.getAge() );
+        if ( createUserDTO != null ) {
+            user.gender( UserMapper.toGender( createUserDTO.getGender() ) );
+            user.hobbies( UserMapper.toHobbies( createUserDTO.getHobbies() ) );
+            user.username( createUserDTO.getUsername() );
+            user.password( createUserDTO.getPassword() );
+            user.email( createUserDTO.getEmail() );
+            user.address( createUserDTO.getAddress() );
+            user.age( createUserDTO.getAge() );
         }
         user.role( role );
 
@@ -37,7 +39,28 @@ public class UserMapperImpl implements UserMapper {
     }
 
     @Override
-    public UserDTO userEntityToDTO(User user) {
+    public DetailUserDTO toDetailUserDTO(User user) {
+        if ( user == null ) {
+            return null;
+        }
+
+        DetailUserDTO detailUserDTO = new DetailUserDTO();
+
+        detailUserDTO.setGender( UserMapper.toGenderString( user.getGender() ) );
+        detailUserDTO.setHobbies( UserMapper.toHobbiesString( user.getHobbies() ) );
+        detailUserDTO.setMeetings( UserMapper.toMeetingDTO( user.getParticipations() ) );
+        detailUserDTO.setId( user.getId() );
+        detailUserDTO.setUsername( user.getUsername() );
+        detailUserDTO.setEmail( user.getEmail() );
+        detailUserDTO.setTimeStatus( user.getTimeStatus() );
+        detailUserDTO.setAddress( user.getAddress() );
+        detailUserDTO.setAge( user.getAge() );
+
+        return detailUserDTO;
+    }
+
+    @Override
+    public UserDTO toUserDTO(User user) {
         if ( user == null ) {
             return null;
         }
@@ -48,9 +71,6 @@ public class UserMapperImpl implements UserMapper {
         userDTO.setHobbies( UserMapper.toHobbiesString( user.getHobbies() ) );
         userDTO.setId( user.getId() );
         userDTO.setUsername( user.getUsername() );
-        userDTO.setPassword( user.getPassword() );
-        userDTO.setEmail( user.getEmail() );
-        userDTO.setTimeStatus( user.getTimeStatus() );
         userDTO.setAddress( user.getAddress() );
         userDTO.setAge( user.getAge() );
 

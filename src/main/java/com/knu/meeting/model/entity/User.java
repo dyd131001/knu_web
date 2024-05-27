@@ -60,7 +60,7 @@ public class User {
     private List<Hobby> hobbies;
 
     @OneToMany(fetch = FetchType.LAZY ,mappedBy = "user", cascade = CascadeType.REMOVE)
-    private Set<Participation> participations;
+    private List<Participation> participations;
 
     @Builder
     public User(String username, String password, String email, Address address, int age, Gender gender, Role role , List<Hobby> hobbies) {
@@ -73,7 +73,7 @@ public class User {
         this.gender = gender;
         this.role = role;
         this.hobbies = hobbies != null ? hobbies : new ArrayList<>();
-        this.participations = new HashSet<>();
+        this.participations = new ArrayList<>();
     }
 
     public void updateAddress(Address address) {

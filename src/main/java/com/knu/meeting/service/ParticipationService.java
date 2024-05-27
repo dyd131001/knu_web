@@ -21,11 +21,6 @@ public class ParticipationService {
         return participationRepository.findById(id);
     }
 
-    public List<Participation> findByUser(User user) {
-        return participationRepository.findByUser(user);
-    }
 
-    public List<Participation> findPastParticipationsByUser(User user) {
-        return participationRepository.findPastParticipationsByUser(user);
-    }
+
 }

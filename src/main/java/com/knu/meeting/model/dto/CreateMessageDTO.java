@@ -8,12 +8,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class GroupMessageDTO {
+public class CreateMessageDTO {
 
-    private Long id;
-
-    private TimeStatus timeStatus;
-
-    private String username;
     private String contents;
+
+    private Long userId;
+    private Long meetingID;
 }

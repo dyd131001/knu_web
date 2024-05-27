@@ -22,20 +22,6 @@ public class ParticipationRepositoryImpl implements ParticipationRepository {
     }
 
     @Override
-    public List<Participation> findByUser(User user) {
-        return entityManager.createQuery("SELECT p FROM Participation p WHERE p.user = :user", Participation.class)
-                .setParameter("user", user)
-                .getResultList();
-    }
-
-    @Override
-    public List<Participation> findPastParticipationsByUser(User user) {
-        return entityManager.createQuery("SELECT p FROM Participation p WHERE p.user = :user AND p.meeting.endTime < CURRENT_TIMESTAMP", Participation.class)
-                .setParameter("user", user)
-                .getResultList();
-    }
-
-    @Override
     public void save(Participation participation) {
         if (participation.getId() == null) {
             entityManager.persist(participation);

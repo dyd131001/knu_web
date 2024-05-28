@@ -105,6 +105,7 @@ public class MeetingService {
                 .orElseThrow(() -> new EntityNotFoundException("location not found with id: " + createMeetingDTO.getUserId()));
 
         Meeting meeting = MeetingMapper.INSTANCE.createMeetingDTOToEntity(createMeetingDTO,location,user);
+        meetingRepository.save(meeting);
 
         Participation participation = Participation.builder()
                 .meeting(meeting)
@@ -133,7 +134,7 @@ public class MeetingService {
     }
 
 
-    public List<MeetingDTO>  findAllByLocationAndHobbie(String locationName, Address address, Hobby hobby) {
+    public List<MeetingDTO> findAllByLocationAndHobbies(String locationName, Address address, Hobby hobby) {
         return meetingRepository.findAllByLocationAndHobby( locationName, address , hobby)
                 .stream()
                 .map(meeting -> {

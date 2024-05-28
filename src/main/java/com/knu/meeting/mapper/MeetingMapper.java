@@ -38,7 +38,7 @@ public interface MeetingMapper {
 
 
     @Mapping(source = "meeting.hobbies", target = "hobbies", qualifiedByName = "toHobbiesString")
-    @Mapping(source = "meeting.location.position", target = "position")
+    //@Mapping(source = "meeting.location.position", target = "position")
     MeetingDTO toMeetingDTO(Meeting meeting);
 
     @Mapping(source = "meeting.location.id", target = "locationId")

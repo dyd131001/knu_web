@@ -30,11 +30,14 @@ import java.util.List;
 import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Getter
 @Table(name = "meetings" )
+@RequiredArgsConstructor
 //@Table(name = "meetings" ,indexes = {@index(name="meeting_creator_id", columnList="creator_id"),
 //       @index(name="meeting_creator_id", columnList="creator_id")
 // })

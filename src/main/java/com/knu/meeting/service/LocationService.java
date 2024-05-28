@@ -19,10 +19,12 @@ import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class LocationService {
 
     private LocationRepository locationRepository;
@@ -36,6 +38,7 @@ public class LocationService {
     public Long create(CreateLocationDTO createLocationDTO) {
 
         Location location = LocationMapper.INSTANCE.createLocationDTOToEntity(createLocationDTO);
+        log.info("location={} ", location);
         locationRepository.save(location);
 
         return location.getId();

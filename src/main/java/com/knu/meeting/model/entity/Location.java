@@ -16,10 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.BatchSize;
 
 @Entity
 @Getter
+@RequiredArgsConstructor
 @Table(name = "locations" )
 public class Location {
 

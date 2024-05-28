@@ -19,12 +19,15 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 
 // user와 meeting을 연결해주는 역할
 @Entity
 @Getter
 @Table(name = "participations")
+@RequiredArgsConstructor
 public class Participation {
 
     @Id

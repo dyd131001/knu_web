@@ -27,8 +27,8 @@ public class MeetingRepositoryImpl implements MeetingRepository {
 
     @Override
     public List<Meeting> findMeetingsAfterId(Long id, Address address, Hobby hobby) {
-        return entityManager.createQuery("SELECT m FROM Meeting m WHERE m.id > :id" +
-                        "AND  m.location.address = :address" +
+        return entityManager.createQuery("SELECT m FROM Meeting m WHERE m.id > :id " +
+                        "AND  m.location.address = :address " +
                         "AND :hobby MEMBER OF m.hobbies", Meeting.class)
                 .setParameter("id", id)
                 .setParameter("address", address)
@@ -83,7 +83,7 @@ public class MeetingRepositoryImpl implements MeetingRepository {
     public List<Meeting> findAllByAddressAndHobby(Address address, Hobby hobby) {
         // WHERE m.title LIKE :title
         return entityManager.createQuery(
-                "SELECT m FROM Meeting m WHERE m.location.address = :address" +
+                "SELECT m FROM Meeting m WHERE m.location.address = :address " +
                         "AND :hobby MEMBER OF m.hobbies", Meeting.class)
                 // List<hobby>인 경우 "AND m.hobbies IN :hobbies" 사용
                 //.setParameter("title", "%" + title + "%")

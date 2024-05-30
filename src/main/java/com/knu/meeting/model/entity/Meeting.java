@@ -32,6 +32,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.BatchSize;
 
 @Entity
@@ -92,6 +93,7 @@ public class Meeting {
         this.participations = new ArrayList<Participation>();
         this.messages = new ArrayList<GroupMessage>();
         this.hobbies = hobbies != null ? hobbies : new ArrayList<>();
+        Hibernate.initialize(location);
         location.getMeeting().add(this);
     }
 

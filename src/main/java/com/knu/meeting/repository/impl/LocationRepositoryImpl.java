@@ -46,9 +46,9 @@ public class LocationRepositoryImpl implements LocationRepository {
     public List<Location> findAllByAddressAndHobby(Address address, Hobby hobby){
         return entityManager.createQuery(
                         "SELECT l FROM Location l WHERE l.address = :address " +
-                                "AND EXISTS (" +
-                                "   SELECT 1 FROM Meeting m " +
-                                "   WHERE m.location = l AND :hobby MEMBER OF m.hobbies" +
+                                "AND EXISTS ( " +
+                                "SELECT 1 FROM Meeting m " +
+                                "WHERE m.location = l AND :hobby MEMBER OF m.hobbies " +
                                 ")", Location.class)
                 .setParameter("address", address)
                 .setParameter("hobby", hobby)

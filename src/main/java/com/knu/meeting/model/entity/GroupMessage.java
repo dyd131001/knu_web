@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 
 @Entity
 @Getter
@@ -47,6 +48,7 @@ public class GroupMessage {
         this.timeStatus = new TimeStatus();
         this.meeting = meeting;
         this.contents = contents;
+        Hibernate.initialize(meeting);
         meeting.getMessages().add(this);
     }
 

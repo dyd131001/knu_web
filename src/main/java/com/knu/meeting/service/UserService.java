@@ -9,6 +9,7 @@ import com.knu.meeting.model.entity.User;
 import com.knu.meeting.model.vo.Address;
 import com.knu.meeting.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.hibernate.Hibernate;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserService {
 
     private UserRepository userRepository;

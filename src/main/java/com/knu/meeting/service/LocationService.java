@@ -16,6 +16,7 @@ import com.knu.meeting.model.vo.Position;
 import com.knu.meeting.model.vo.PossibleAge;
 import com.knu.meeting.repository.LocationRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional
 public class LocationService {
 
     private LocationRepository locationRepository;

@@ -69,7 +69,7 @@ public class UserController {
     @ApiErrorExample(UserError.class)
     @Operation(summary = "회원 지역 분류 정보 변경" , description = "모임 정보를 필터링하는 지역 분류 변경.")
     @PostMapping("/update/{id}/address")
-    public ResponseEntity<ResponseDTO<Boolean>> updateAddress(@PathVariable("id") Long id, @RequestBody Address address) {
+    public ResponseEntity<ResponseDTO<Boolean>> updateAddress(@PathVariable("id") Long id, @ModelAttribute Address address) {
         return ResponseEntity
                 .ok()
                 .body(ResponseDTO.of(userService.updateAddress(id, address),"회원 지역 분류  변경"));

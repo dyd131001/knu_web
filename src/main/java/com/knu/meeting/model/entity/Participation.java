@@ -21,6 +21,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 
 
 // user와 meeting을 연결해주는 역할
@@ -50,6 +51,8 @@ public class Participation {
     public Participation( User user, Meeting meeting) {
         this.user = user;
         this.meeting = meeting;
+        Hibernate.initialize(user);
+        Hibernate.initialize(meeting);
         user.getParticipations().add(this);
         meeting.getParticipations().add(this);
     }

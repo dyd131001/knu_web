@@ -14,6 +14,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Embeddable
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "시간 상태")
 public class TimeStatus {
 

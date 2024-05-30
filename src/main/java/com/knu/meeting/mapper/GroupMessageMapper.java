@@ -19,6 +19,8 @@ public interface GroupMessageMapper {
 
     GroupMessageMapper INSTANCE = Mappers.getMapper(GroupMessageMapper.class);
 
+    @Mapping(source = "user", target = "creator")
+    @Mapping(source = "meeting", target = "meeting")
     GroupMessage CreateMessageDTOToEntity(
             CreateMessageDTO createMessageDTO,
             User user,

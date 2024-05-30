@@ -16,6 +16,7 @@ import com.knu.meeting.repository.MeetingRepository;
 import com.knu.meeting.repository.ParticipationRepository;
 import com.knu.meeting.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class MeetingService {
 
     private MeetingRepository meetingRepository;
@@ -102,7 +104,7 @@ public class MeetingService {
                 .orElseThrow(() -> new EntityNotFoundException("user not found with id: " + createMeetingDTO.getUserId()));
 
         Location location = locationRepository.findById(createMeetingDTO.getLocationId())
-                .orElseThrow(() -> new EntityNotFoundException("location not found with id: " + createMeetingDTO.getUserId()));
+                .orElseThrow(() -> new EntityNotFoundException("location not found with id: " + createMeetingDTO.getLocationId()));
 
         Meeting meeting = MeetingMapper.INSTANCE.createMeetingDTOToEntity(createMeetingDTO,location,user);
         meetingRepository.save(meeting);

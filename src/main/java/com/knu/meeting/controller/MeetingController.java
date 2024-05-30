@@ -55,7 +55,7 @@ public class MeetingController {
     @GetMapping("/update/data")
     public ResponseEntity<ResponseDTO<List<MeetingDTO>>> updateData(
             @RequestParam Long id,
-            @RequestParam Address address,
+            @ModelAttribute Address address,
             @RequestParam Hobby hobby) {
         return ResponseEntity
                 .ok()
@@ -127,7 +127,7 @@ public class MeetingController {
     @Operation(summary = "취미로 미팅 검색", description = "타이틀, 지역, 취미로 미팅 검색")
     @GetMapping("/search/hobby")
     public ResponseEntity<ResponseDTO<List<MeetingDTO>>> searchMeetingsByHobby(
-            @RequestParam Address address,
+            @ModelAttribute Address address,
             @RequestParam Hobby hobby) {
         return ResponseEntity
                 .ok()
@@ -139,7 +139,7 @@ public class MeetingController {
     @GetMapping("/search/locationName")
     public ResponseEntity<ResponseDTO<List<MeetingDTO>>> searchMeetingsByLocationName(
             @RequestParam String locationName,
-            @RequestParam Address address,
+            @ModelAttribute Address address,
             @RequestParam Hobby hobby) {
         return ResponseEntity
                 .ok()

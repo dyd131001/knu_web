@@ -1,5 +1,19 @@
 openjdk 17 환경에서 동작가능합니다.
 
+mac 기준 설정 방법
+
+sh파일을 만들려했으나 mac 기준 bash와 zsh 중 어떤걸 쓰는지 모르고 디렉토리 위치가 다를 수 있어 작성하지 못했습니다.
+zsh과 jdk-17.jdk의 위치가 /Library/Java/JavaVirtualMachines 일때의 기준으로 설치 방법입니다.
+find / -type d -name "jdk-17.jdk" 명령어를 통해 jdk의 위치를 알 수 있습니다.
+
+
+brew install openjdk@17
+JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home"
+echo "JAVA_HOME을 설정하고 PATH에 추가합니다."
+echo "export JAVA_HOME=$JAVA_HOME" >> ~/.zshrc
+echo 'export PATH=$PATH:$JAVA_HOME/bin' >> ~/.zshrc
+source ~/.zshrc
+
 ## 서버 DB설정
 mysql 설치 및 src/main/resources/application.properties에서 DB 접속 정보를 설정해야합니다.
 <br>

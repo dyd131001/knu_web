@@ -1,4 +1,4 @@
-
+openjdk 17 환경에서 동작가능합니다.
 
 ## 서버 DB설정
 mysql 설치 및 src/main/resources/application.properties에서 DB 접속 정보를 설정해야합니다.

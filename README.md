@@ -23,6 +23,8 @@ db설정은 아래의 명령어를 통해 진행할 수 있습니다.
 1. chmod +x setup_mysql.sh
 2. ./setup_mysql.sh
 
+이후 src/main/resources/application.properties 에서 mysql의 nsername과 password를 설정해야합니다.
+
 ### setup_mysql.sh 동작과정
 
 1. mysql 설치
@@ -33,7 +35,8 @@ db설정은 아래의 명령어를 통해 진행할 수 있습니다.
 위의 과정을 모두 실행했다면 아래의 명령어를 통해 서버를 실행할 수 있습니다.
 
 ## 서버 실행
-서버 실행은 아래의 명령어를 통해 진행할 수 있습니다.
+jdk설치와 mysql 설정 및 properties 설정이 끝났다면 서버 실행은 아래의 명령어를 통해 진행할 수 있습니다.
+
 1. chmod +x start_server.sh
 2. ./start_server.sh
 3. http://localhost:9000/ 접속하여 api 명세서 확인하기
